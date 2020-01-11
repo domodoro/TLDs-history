@@ -2,7 +2,7 @@ name: Watch TLDs changes daily
 
 on:
   schedule:
-  - cron: '* * * * *'
+  - cron: '*/5 * * * *'
 
 jobs:
   tlds_watch:
