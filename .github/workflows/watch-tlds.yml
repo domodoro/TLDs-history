@@ -1,0 +1,23 @@
+name: Watch TLDs changes daily
+
+on:
+  schedule:
+  - cron: '* * * * *'
+
+jobs:
+  tlds_watch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Download TLDs file
+      run: curl -s "https://data.iana.org/TLD/tlds-alpha-by-domain.txt" | tail -n +2 >tlds.txt
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v2 
+      with:
+        message: "TLD changes"
+        path: "."
+        pattern: "*.txt"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
